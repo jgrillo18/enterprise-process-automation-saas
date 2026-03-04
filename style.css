@@ -1,0 +1,122 @@
+/* enterprise palette */
+:root {
+    --primary: #3498db;
+    --accent: #2980b9;
+    --secondary: #2c3e50;
+    --bg: #f4f6f9;
+    --card-bg: #ffffff;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background: var(--bg);
+}
+
+.navbar {
+    background: linear-gradient(90deg, var(--secondary) 0%, #34495e 100%) !important;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ensure brand/link always white (no purple visited) */
+.navbar .navbar-brand,
+.navbar .navbar-nav .nav-link {
+    color: white !important;
+}
+.navbar .navbar-brand:hover,
+.navbar .navbar-nav .nav-link:hover {
+    color: #ddd !important;
+}
+
+/* cards with colored top border */
+.card {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+    border-top: 4px solid var(--primary);
+    transition: transform 0.2s;
+}
+.card:hover {
+    transform: translateY(-3px);
+}
+.card h2 {
+    margin-bottom: 1rem;
+    color: var(--primary);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.25rem;
+}
+
+.dashboard {
+    /* bootstrap handles layout */
+}
+
+/* central container with responsive max-width */
+.container {
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* sticky navbar */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button, .btn-primary {
+    background: var(--primary) !important;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover, .btn-primary:hover {
+    background: var(--accent) !important;
+}
+
+/* login form centering */
+#loginForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+#loginForm .card {
+    max-width: 400px;
+    width: 100%;
+}
+
+/* badges */
+.badge {
+    font-size: 0.9rem;
+}
+
+/* welcome banner style */
+.alert-success {
+    background: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+
+.navbar-text {
+    font-weight: 500;
+    margin-left: 20px;
+}
