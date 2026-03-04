@@ -9,6 +9,7 @@ on:
 permissions:
   contents: read
   pages: write
+  actions: write
   id-token: write
 
 jobs:
@@ -17,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          persist-credentials: true   # keep GITHUB_TOKEN available for later push
 
       # no build step needed for now; site is already in docs/
 
