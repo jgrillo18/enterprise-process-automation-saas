@@ -25,19 +25,71 @@
     </div>
 
     <div id="dashboardScreen" class="container py-4" style="display:none;">
-        <div class="mb-4">
-            <h1 class="display-6">Panel de control</h1>
-            <p class="lead">Bienvenido, <span id="userLabel"></span>!</p>
+        <div id="welcomeBanner" class="mb-4 bg-white p-4 rounded shadow-sm">
+            <h1 class="display-6 text-dark">Panel de control</h1>
+            <p class="lead mb-0">Gestiona procesos, usuarios y revisa auditoría desde aquí.</p>
         </div>
-        <div class="row">
-            <div class="col-md-6">
+        <div class="row mb-4 justify-content-center">
+            <div class="col-12 col-md-4">
                 <div class="card p-3 text-center">
-                    <h5>Procesos <span class="badge bg-primary">3</span></h5>
+                    <h5>Total procesos <span id="processCount" class="badge bg-primary">3</span></h5>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-12 col-md-4">
                 <div class="card p-3 text-center">
-                    <h5>Usuarios <span class="badge bg-secondary">1</span></h5>
+                    <h5>Usuarios <span id="userCount" class="badge bg-secondary">1</span></h5>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card p-3 text-center">
+                    <h5>Entradas auditoría <span id="logCount" class="badge bg-secondary">2</span></h5>
+                </div>
+            </div>
+        </div>
+        <div class="row gy-4 justify-content-center">
+            <div class="col-12 col-md-6 col-lg-5">
+                <div class="card">
+                    <h2>Crear Proceso</h2>
+                    <form onsubmit="event.preventDefault()">
+                        <input class="form-control" type="text" placeholder="Título">
+                        <textarea class="form-control" placeholder="Descripción"></textarea>
+                        <button class="btn btn-primary mt-2" type="button">Crear</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-5">
+                <div class="card">
+                    <h2>Procesos</h2>
+                    <ul id="processList" class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">Proceso A<span class="badge bg-secondary rounded-pill">Activo</span></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">Proceso B<span class="badge bg-secondary rounded-pill">En curso</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-5">
+                <div class="card" id="userCard">
+                    <h2>Usuarios (admin)</h2>
+                    <form onsubmit="event.preventDefault()">
+                        <input class="form-control" type="text" placeholder="Usuario">
+                        <input class="form-control" type="password" placeholder="Contraseña">
+                        <select class="form-select">
+                            <option>usuario</option>
+                            <option>admin</option>
+                        </select>
+                        <button class="btn btn-primary" type="button">Crear usuario</button>
+                    </form>
+                    <ul class="list-group mt-2">
+                        <li class="list-group-item">admin (admin)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-5">
+                <div class="card" id="logsCard">
+                    <h2>Registro de Auditoría</h2>
+                    <ul class="list-group">
+                        <li class="list-group-item">admin: inicio de sesión</li>
+                        <li class="list-group-item">admin: creó proceso</li>
+                    </ul>
                 </div>
             </div>
         </div>
