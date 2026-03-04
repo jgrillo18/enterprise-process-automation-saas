@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: saas
+      POSTGRES_PASSWORD: saas123
+      POSTGRES_DB: enterprise_db
+    ports:
+      - "5432:5432"
+
+  web:
+    build: .
+    command: gunicorn --access-logfile - --error-logfile - -w 4 -b 0.0.0.0:5000 run:app
+    volumes:
+      - .:/app
+    ports:
+      - "5000:5000"
+    environment:
+      DATABASE_URL: postgresql://saas:saas123@db:5432/enterprise_db
+      JWT_SECRET_KEY: super-secret-key
+    depends_on:
+      - db

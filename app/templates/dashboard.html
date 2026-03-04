@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+    <div id="welcomeBanner"></div>
+    <div class="mb-4 bg-white p-4 rounded shadow-sm">
+        <h1 class="display-6 text-dark">Panel de control</h1>
+        <p class="lead mb-0">Gestiona procesos, usuarios y revisa auditoría desde aquí.</p>
+    </div>
+    <!-- summary stats -->
+    <div class="row mb-4 justify-content-center">
+        <div class="col-12 col-md-4">
+            <div class="card p-3 text-center">
+                <h5>Total procesos <span id="processCount" class="badge bg-primary">0</span></h5>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card p-3 text-center">
+                <h5>Usuarios <span id="userCount" class="badge bg-secondary">0</span></h5>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card p-3 text-center">
+                <h5>Entradas auditoría <span id="logCount" class="badge bg-secondary">0</span></h5>
+            </div>
+        </div>
+    </div>
+    <div class="row gy-4 justify-content-center">
+    <div class="col-12 col-md-6 col-lg-5">
+        <div class="card">
+            <h2>Crear Proceso</h2>
+            <form onsubmit="createProcess(event)">
+                <input class="form-control" type="text" id="title" placeholder="Título" required>
+                <textarea class="form-control" id="description" placeholder="Descripción" required></textarea>
+                <button class="btn btn-primary mt-2" type="submit">Crear</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-5">
+        <div class="card">
+            <h2>Procesos</h2>
+            <ul id="processList" class="list-group"></ul>
+        </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-5">
+    <div class="card" id="userCard" style="display:none;">
+        <h2>Usuarios (admin)</h2>
+        <form onsubmit="createUser(event)">
+            <input class="form-control" type="text" id="newUsername" placeholder="Usuario" required>
+            <input class="form-control" type="password" id="newPassword" placeholder="Contraseña" required>
+            <select class="form-select" id="newRole">
+                <option value="user">usuario</option>
+                <option value="admin">admin</option>
+            </select>
+            <button class="btn btn-primary" type="submit">Crear usuario</button>
+        </form>
+        <ul id="userList" class="list-group mt-2"></ul>
+    </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-5">
+    <div class="card" id="logsCard" style="display:none;">
+        <h2>Registro de Auditoría</h2>
+        <ul id="logList" class="list-group"></ul>
+    </div>
+    </div>
+    </div>
+</div>
+{% endblock %}

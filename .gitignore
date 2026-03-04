@@ -1,0 +1,24 @@
+# Python artifacts
+*.pyc
+__pycache__/
+
+# Environment
+.env
+.env.*
+
+# Database data volume
+postgres_data/
+
+# Virtual environments
+venv/
+*/venv/
+
+# IDEs
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Others
+.DS_Store

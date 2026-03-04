@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<form id="loginForm" onsubmit="login(event)">
+    <div class="card">
+        <h2 class="text-center">Iniciar Sesión</h2>
+        <input class="form-control" type="text" id="username" placeholder="Usuario" required>
+        <input class="form-control" type="password" id="password" placeholder="Contraseña" required>
+        <button class="btn btn-primary w-100 mt-2" type="submit">Entrar</button>
+    </div>
+</form>
+{% endblock %}
