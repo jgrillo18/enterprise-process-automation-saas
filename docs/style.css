@@ -41,6 +41,7 @@ body {
     box-shadow: 0 6px 12px rgba(0,0,0,0.08);
     border-top: 4px solid var(--primary);
     transition: transform 0.2s;
+    color: #333;                      /* ensure card text is dark */
 }
 .card:hover {
     transform: translateY(-3px);
