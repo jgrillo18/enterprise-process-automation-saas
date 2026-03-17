@@ -1,7 +1,6 @@
 import os
 import mimetypes
-from flask import Flask, render_template
-from .config import Config
+from flask import Flask, render_templatefrom whitenoise import WhiteNoisefrom .config import Config
 from .extensions import db, jwt, migrate
 from .utils.logger import setup_logger
 
@@ -85,5 +84,8 @@ def create_app():
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(process_bp, url_prefix="/api/process")
     app.register_blueprint(admin_bp, url_prefix="/api/admin")
+
+    # Serve static files with correct MIME types via WhiteNoise
+    app.wsgi_app = WhiteNoise(app.wsgi_app, root=os.path.join(base_dir, "static"), prefix="static")
 
     return app
