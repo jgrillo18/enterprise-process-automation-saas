@@ -1,8 +1,13 @@
 import os
+import mimetypes
 from flask import Flask, render_template
 from .config import Config
 from .extensions import db, jwt, migrate
 from .utils.logger import setup_logger
+
+# Fix CSS MIME type on some Linux/cloud environments
+mimetypes.add_type('text/css', '.css')
+mimetypes.add_type('application/javascript', '.js')
 
 def create_app():
     base_dir = os.path.abspath(os.path.dirname(__file__))

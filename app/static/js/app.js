@@ -88,8 +88,30 @@ function loadProcesses() {
         let count = 0;
         if (Array.isArray(data)) {
             count = data.length;
+            const statusColors = {
+                pending: "warning",
+                in_progress: "primary",
+                completed: "success"
+            };
+            const statusLabels = {
+                pending: "Pendiente",
+                in_progress: "En progreso",
+                completed: "Completado"
+            };
             data.forEach(p => {
-                list.innerHTML += `<li class="list-group-item d-flex justify-content-between align-items-center">${p.title}<span class="badge bg-secondary rounded-pill">${p.status}</span></li>`;
+                const color = statusColors[p.status] || "secondary";
+                const label = statusLabels[p.status] || p.status;
+                list.innerHTML += `
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <strong class="text-dark">${p.title}</strong>
+                            <br><small class="text-muted">${p.description || ''}</small>
+                            ${p.created_at ? `<br><small class="text-muted">📅 ${p.created_at}</small>` : ''}
+                        </div>
+                        <span class="badge bg-${color} ms-2">${label}</span>
+                    </div>
+                </li>`;
             });
         } else {
             console.warn('unexpected loadProcesses response', data);
@@ -183,9 +205,24 @@ function loadLogs() {
     });
 }
 
+function loadDemo() {
+    fetch('/api/process/demo', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+    })
+    .then(res => res.json())
+    .then(data => {
+        loadProcesses();
+        alert(data.message || 'Demo cargado');
+    })
+    .catch(err => {
+        alert('Error cargando demo');
+        console.error(err);
+    });
+}
+
 // initialize on DOM
-window.addEventListener('DOMContentLoaded', () => {
-    const tok = localStorage.getItem('token');
+window.addEventListener('DOMContentLoaded', () => {    const tok = localStorage.getItem('token');
     if (tok) {
         if (isTokenExpired(tok)) {
             logout();
