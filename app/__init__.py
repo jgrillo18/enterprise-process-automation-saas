@@ -1,6 +1,8 @@
 import os
 import mimetypes
-from flask import Flask, render_templatefrom whitenoise import WhiteNoisefrom .config import Config
+from flask import Flask, render_template
+from whitenoise import WhiteNoise
+from .config import Config
 from .extensions import db, jwt, migrate
 from .utils.logger import setup_logger
 
