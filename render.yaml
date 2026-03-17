@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: enterprise-process-automation
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn run:app --bind 0.0.0.0:$PORT --workers 2
+    envVars:
+      - key: DATABASE_URL
+        sync: false   # set manually with Neon connection string
+      - key: JWT_SECRET_KEY
+        sync: false   # set manually
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+      - key: FLASK_ENV
+        value: production

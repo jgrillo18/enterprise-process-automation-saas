@@ -17,6 +17,13 @@ venv/
 .vscode/
 .idea/
 
+# Temp files
+temp.html
+*.tmp
+
+# SQLite dev db
+*.db
+
 # Logs
 *.log
 

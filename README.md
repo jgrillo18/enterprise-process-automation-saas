@@ -1,5 +1,10 @@
 # Enterprise Process Automation SaaS
 
+![Stack](https://img.shields.io/badge/Backend-Flask-000000?style=flat-square&logo=flask)
+![Stack](https://img.shields.io/badge/Database-PostgreSQL-336791?style=flat-square&logo=postgresql)
+![Stack](https://img.shields.io/badge/Auth-JWT-000000?style=flat-square&logo=jsonwebtokens)
+![Deploy](https://img.shields.io/badge/Live-Render-46E3B7?style=flat-square&logo=render)
+
 Mini plataforma SaaS para automatización de procesos internos empresariales.
 
 Diseñada para digitalizar flujos manuales como:
@@ -8,6 +13,20 @@ Diseñada para digitalizar flujos manuales como:
 - Tareas operativas
 - Aprobaciones
 - Procesos basados en Excel, correos o WhatsApp
+
+---
+
+## 🚀 Live Demo
+
+| Servicio | URL |
+|----------|-----|
+| **Aplicación** | https://enterprise-process-automation.onrender.com |
+
+> **Credenciales de demo**
+> - Usuario: `admin`
+> - Contraseña: `admin`
+>
+> **Nota:** La instancia gratuita de Render puede tardar ~30 segundos en despertar tras inactividad.
 
 ---
 
