@@ -119,8 +119,9 @@ function loadProcesses() {
         document.getElementById('processCount').textContent = count;
     })
     .catch(err => {
-        alert(err.message || 'Error al cargar procesos');
-        console.error(err);
+        const list = document.getElementById('processList');
+        if (list) list.innerHTML = '<li class="list-group-item text-muted">No se pudieron cargar los procesos.</li>';
+        console.error('loadProcesses error', err);
     });
 }
 
@@ -245,7 +246,7 @@ window.addEventListener('DOMContentLoaded', () => {    const tok = localStorage.
             note.textContent = 'Sesión de usuario normal: funcionalidades de administrador ocultas.';
             document.querySelector('.container').prepend(note);
         }
+        loadProcesses();
     }
-    loadProcesses();
 });
 
