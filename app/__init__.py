@@ -41,6 +41,14 @@ def create_app():
         from flask import send_from_directory
         return send_from_directory(app.static_folder, 'favicon.ico')
 
+    @app.route('/sw.js')
+    def service_worker():
+        from flask import send_from_directory
+        resp = send_from_directory(app.static_folder, 'sw.js')
+        resp.headers['Service-Worker-Allowed'] = '/'
+        resp.headers['Content-Type'] = 'application/javascript'
+        return resp
+
     @app.route("/dashboard")
     def dashboard():
         app.logger.info("dashboard route accessed")

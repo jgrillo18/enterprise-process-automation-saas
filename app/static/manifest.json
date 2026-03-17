@@ -1,0 +1,19 @@
+{
+  "name": "Enterprise Automation SaaS",
+  "short_name": "EnterpriseSaaS",
+  "description": "Plataforma modular Flask con JWT, roles y procesos empresariales",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#2c3e50",
+  "theme_color": "#3498db",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "/static/img/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

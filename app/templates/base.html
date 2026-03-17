@@ -1,16 +1,30 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
-    <title>Enterprise Automation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Automation SaaS</title>
+    <!-- PWA -->
+    <link rel="manifest" href="/static/manifest.json">
+    <meta name="theme-color" content="#2c3e50">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="EnterpriseSaaS">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" crossorigin="anonymous">
+    <!-- Custom styles -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">Enterprise Automation SaaS</a>
-            <span id="navUsername" class="navbar-text text-light me-auto"></span>
-            <button class="btn btn-outline-light" onclick="logout()">Cerrar sesión</button>
+            <a class="navbar-brand fw-bold" href="/" data-i18n="nav.brand">Enterprise Automation SaaS</a>
+            <span id="navUsername" class="navbar-text text-light me-auto ms-3 small"></span>
+            <div class="d-flex align-items-center gap-2">
+                <button id="pwaInstallBtn" class="btn btn-sm btn-success d-none" data-i18n="pwa.install">Instalar App</button>
+                <button class="btn btn-sm btn-outline-light" onclick="toggleLang()" id="langBtn" data-i18n="lang.switch">EN</button>
+                <button class="btn btn-sm btn-outline-light" onclick="logout()" data-i18n="nav.logout">Cerrar sesión</button>
+            </div>
         </div>
     </nav>
 
@@ -20,21 +34,143 @@
 
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
     <script>
-        // attempt to fill navbar username when script loads
-        document.addEventListener('DOMContentLoaded', function () {
-            const tok = localStorage.getItem('token');
-            if (tok) {
-                try {
-                    const payload = JSON.parse(atob(tok.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
-                    if (payload.sub) {
-                        const span = document.getElementById('navUsername');
-                        if (span) span.textContent = 'Bienvenido, ' + payload.sub;
-                    }
-                } catch (e) {
-                    console.error('failed to parse token for navLabel', e);
-                }
+    // ── i18n ──────────────────────────────────────────────────────────────────
+    const TRANSLATIONS = {
+        es: {
+            'nav.brand':      'Enterprise Automation SaaS',
+            'nav.welcome':    'Bienvenido',
+            'nav.logout':     'Cerrar sesión',
+            'login.title':    'Iniciar Sesión',
+            'login.username': 'Usuario',
+            'login.password': 'Contraseña',
+            'login.submit':   'Entrar',
+            'demo.title':      'Demo Freelancer',
+            'demo.badge':      'Actualizado automáticamente',
+            'demo.credentials':'Usuario: admin / Contraseña: admin',
+            'demo.email':      'Correo: jhonnathan@jgrillo.tech',
+            'demo.desc':       'Esta demo simula el panel que corre en contenedor Docker. Clona el repositorio para ver el código real y personalizarlo.',
+            'demo.whatoffer':  '¿Qué ofrezco?',
+            'demo.offer1':     'Aplicación Flask modular con JWT y control de roles.',
+            'demo.offer2':     'Interfaz Bootstrap 5 responsiva y elegante.',
+            'demo.offer3':     'Despliegue en Docker + PostgreSQL listo para producción.',
+            'demo.offer4':     'Página de demostración automatizada en GitHub Pages.',
+            'demo.offer5':     'Escalable: agrega más modelos, endpoints o un motor de procesos.',
+            'demo.contact':    'Contacto:',
+            'pwa.install':     'Instalar App',
+            'lang.switch':     'EN',
+            'dash.title':      'Panel de control',
+            'dash.subtitle':   'Gestiona procesos, usuarios y revisa auditoría desde aquí.',
+            'dash.loadDemo':   '⚡ Cargar datos demo',
+        },
+        en: {
+            'nav.brand':      'Enterprise Automation SaaS',
+            'nav.welcome':    'Welcome',
+            'nav.logout':     'Log out',
+            'login.title':    'Sign In',
+            'login.username': 'Username',
+            'login.password': 'Password',
+            'login.submit':   'Enter',
+            'demo.title':      'Freelancer Demo',
+            'demo.badge':      'Auto-updated',
+            'demo.credentials':'User: admin / Password: admin',
+            'demo.email':      'Email: jhonnathan@jgrillo.tech',
+            'demo.desc':       'This demo simulates the panel running in a Docker container. Clone the repository to see the real code and customize it.',
+            'demo.whatoffer':  'What I offer',
+            'demo.offer1':     'Modular Flask app with JWT and role-based access control.',
+            'demo.offer2':     'Responsive and elegant Bootstrap 5 UI.',
+            'demo.offer3':     'Docker + PostgreSQL deployment ready for production.',
+            'demo.offer4':     'Automated demo page on GitHub Pages.',
+            'demo.offer5':     'Scalable: add more models, endpoints or a process engine.',
+            'demo.contact':    'Contact:',
+            'pwa.install':     'Install App',
+            'lang.switch':     'ES',
+            'dash.title':      'Dashboard',
+            'dash.subtitle':   'Manage processes, users and review audit logs here.',
+            'dash.loadDemo':   '⚡ Load demo data',
+        }
+    };
+
+    let currentLang = localStorage.getItem('lang') || 'es';
+
+    function applyTranslations(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.dataset.i18n;
+            const val = TRANSLATIONS[lang] && TRANSLATIONS[lang][key];
+            if (!val) return;
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                el.placeholder = val;
+            } else {
+                el.textContent = val;
             }
         });
+        document.getElementById('htmlRoot').lang = lang;
+    }
+
+    function toggleLang() {
+        currentLang = currentLang === 'es' ? 'en' : 'es';
+        localStorage.setItem('lang', currentLang);
+        applyTranslations(currentLang);
+        // update navUsername welcome text
+        const span = document.getElementById('navUsername');
+        if (span && span.dataset.username) {
+            const welcome = TRANSLATIONS[currentLang]['nav.welcome'] || 'Bienvenido';
+            span.textContent = welcome + ', ' + span.dataset.username;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        applyTranslations(currentLang);
+        // fill navbar username
+        const tok = localStorage.getItem('token');
+        if (tok) {
+            try {
+                const payload = JSON.parse(atob(tok.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+                if (payload.sub) {
+                    const span = document.getElementById('navUsername');
+                    if (span) {
+                        span.dataset.username = payload.sub;
+                        const welcome = TRANSLATIONS[currentLang]['nav.welcome'] || 'Bienvenido';
+                        span.textContent = welcome + ', ' + payload.sub;
+                    }
+                }
+            } catch (e) { console.error('token parse error', e); }
+        }
+    });
+
+    // ── PWA Install ───────────────────────────────────────────────────────────
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        const btn = document.getElementById('pwaInstallBtn');
+        if (btn) btn.classList.remove('d-none');
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+        const btn = document.getElementById('pwaInstallBtn');
+        if (btn) {
+            btn.addEventListener('click', async () => {
+                if (!deferredPrompt) return;
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                deferredPrompt = null;
+                if (outcome === 'accepted') btn.classList.add('d-none');
+            });
+        }
+    });
+    window.addEventListener('appinstalled', () => {
+        const btn = document.getElementById('pwaInstallBtn');
+        if (btn) btn.classList.add('d-none');
+        deferredPrompt = null;
+    });
+
+    // ── Service Worker ────────────────────────────────────────────────────────
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js', { scope: '/' })
+                .then(reg => console.log('SW registered:', reg.scope))
+                .catch(err => console.log('SW failed:', err));
+        });
+    }
     </script>
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
