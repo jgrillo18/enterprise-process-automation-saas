@@ -1,52 +1,56 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container py-4">
+<div class="container py-2">
 
-    <!-- Demo info banner -->
-    <div class="alert border-0 shadow-sm p-4 mb-4 rounded-3" style="background: linear-gradient(135deg,#eaf4fb 0%,#d6eaf8 100%); border-left: 5px solid #3498db !important;">
-        <div class="d-flex flex-wrap justify-content-between align-items-start gap-4">
-            <div>
-                <h5 class="fw-bold mb-2">
-                    🚀 <span data-i18n="demo.title">Demo Freelancer</span>
-                    <span class="badge bg-success ms-2" style="font-size:0.75rem;" data-i18n="demo.badge">Actualizado automáticamente</span>
-                </h5>
-                <p class="mb-1">
-                    <span class="badge bg-dark me-1">🔑</span>
-                    <strong data-i18n="demo.credentials">Usuario: admin / Contraseña: admin</strong>
-                </p>
-                <p class="mb-1 text-muted small">
-                    ✉️ <span data-i18n="demo.email">Correo: jhonnathan@jgrillo.tech</span>
-                </p>
-                <p class="mb-0 small text-secondary" data-i18n="demo.desc">
-                    Esta demo simula el panel que corre en contenedor Docker. Clona el repositorio para ver el código real y personalizarlo.
-                </p>
+    <!-- Banner + login side by side on lg+ -->
+    <div class="d-flex flex-wrap gap-4 align-items-start">
+
+        <!-- Demo info banner -->
+        <div class="alert border-0 shadow-sm p-4 rounded-3 flex-grow-1 mb-0" style="background: linear-gradient(135deg,#eaf4fb 0%,#d6eaf8 100%); border-left: 5px solid #3498db !important;">
+            <div class="d-flex flex-wrap justify-content-between align-items-start gap-4">
+                <div>
+                    <h5 class="fw-bold mb-2">
+                        🚀 <span data-i18n="demo.title">Demo Freelancer</span>
+                        <span class="badge bg-success ms-2" style="font-size:0.75rem;" data-i18n="demo.badge">Actualizado automáticamente</span>
+                    </h5>
+                    <p class="mb-1">
+                        <span class="badge bg-dark me-1">🔑</span>
+                        <strong data-i18n="demo.credentials">Usuario: admin / Contraseña: admin</strong>
+                    </p>
+                    <p class="mb-1 text-muted small">
+                        ✉️ <span data-i18n="demo.email">Correo: jhonnathan@jgrillo.tech</span>
+                    </p>
+                    <p class="mb-0 small text-secondary" data-i18n="demo.desc">
+                        Esta demo simula el panel que corre en contenedor Docker. Clona el repositorio para ver el código real y personalizarlo.
+                    </p>
+                </div>
+                <div class="border-start border-primary ps-4" style="min-width:220px;">
+                    <p class="fw-semibold mb-2 text-primary" data-i18n="demo.whatoffer">¿Qué ofrezco?</p>
+                    <ul class="list-unstyled small mb-2">
+                        <li class="mb-1">✅ <span data-i18n="demo.offer1">Aplicación Flask modular con JWT y control de roles.</span></li>
+                        <li class="mb-1">✅ <span data-i18n="demo.offer2">Interfaz Bootstrap 5 responsiva y elegante.</span></li>
+                        <li class="mb-1">✅ <span data-i18n="demo.offer3">Despliegue en Docker + PostgreSQL listo para producción.</span></li>
+                        <li class="mb-1">✅ <span data-i18n="demo.offer4">Página de demostración automatizada en GitHub Pages.</span></li>
+                        <li>✅ <span data-i18n="demo.offer5">Escalable: agrega más modelos, endpoints o un motor de procesos.</span></li>
+                    </ul>
+                    <p class="small mb-0 text-muted">
+                        <span data-i18n="demo.contact">Contacto:</span>
+                        <a href="mailto:jhonnathan@jgrillo.tech" class="text-decoration-none ms-1">jhonnathan@jgrillo.tech</a>
+                    </p>
+                </div>
             </div>
-            <div class="border-start border-primary ps-4" style="min-width:220px;">
-                <p class="fw-semibold mb-2 text-primary" data-i18n="demo.whatoffer">¿Qué ofrezco?</p>
-                <ul class="list-unstyled small mb-2">
-                    <li class="mb-1">✅ <span data-i18n="demo.offer1">Aplicación Flask modular con JWT y control de roles.</span></li>
-                    <li class="mb-1">✅ <span data-i18n="demo.offer2">Interfaz Bootstrap 5 responsiva y elegante.</span></li>
-                    <li class="mb-1">✅ <span data-i18n="demo.offer3">Despliegue en Docker + PostgreSQL listo para producción.</span></li>
-                    <li class="mb-1">✅ <span data-i18n="demo.offer4">Página de demostración automatizada en GitHub Pages.</span></li>
-                    <li>✅ <span data-i18n="demo.offer5">Escalable: agrega más modelos, endpoints o un motor de procesos.</span></li>
-                </ul>
-                <p class="small mb-0 text-muted">
-                    <span data-i18n="demo.contact">Contacto:</span>
-                    <a href="mailto:jhonnathan@jgrillo.tech" class="text-decoration-none ms-1">jhonnathan@jgrillo.tech</a>
-                </p>
+        </div><!-- /banner -->
+
+        <!-- Login form -->
+        <form id="loginForm" onsubmit="login(event)" style="min-width:300px; max-width:340px; width:100%;">
+            <div class="card mb-0">
+                <h2 class="text-center" data-i18n="login.title">Iniciar Sesión</h2>
+                <input class="form-control" type="text" id="username" data-i18n="login.username" placeholder="Usuario" required>
+                <input class="form-control" type="password" id="password" data-i18n="login.password" placeholder="Contraseña" required>
+                <button class="btn btn-primary w-100 mt-2" type="submit" data-i18n="login.submit">Entrar</button>
             </div>
-        </div>
-    </div>
+        </form><!-- /login -->
 
-    <!-- Login form -->
-    <form id="loginForm" onsubmit="login(event)">
-        <div class="card mx-auto" style="max-width:400px;">
-            <h2 class="text-center" data-i18n="login.title">Iniciar Sesión</h2>
-            <input class="form-control" type="text" id="username" data-i18n="login.username" placeholder="Usuario" required>
-            <input class="form-control" type="password" id="password" data-i18n="login.password" placeholder="Contraseña" required>
-            <button class="btn btn-primary w-100 mt-2" type="submit" data-i18n="login.submit">Entrar</button>
-        </div>
-    </form>
-
+    </div><!-- /flex wrapper -->
 </div>
 {% endblock %}

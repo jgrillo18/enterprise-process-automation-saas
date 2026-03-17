@@ -23,7 +23,7 @@
             <div class="d-flex align-items-center gap-2">
                 <button id="pwaInstallBtn" class="btn btn-sm btn-success d-none" data-i18n="pwa.install">Instalar App</button>
                 <button class="btn btn-sm btn-outline-light" onclick="toggleLang()" id="langBtn" data-i18n="lang.switch">EN</button>
-                <button class="btn btn-sm btn-outline-light" onclick="logout()" data-i18n="nav.logout">Cerrar sesión</button>
+                <button id="logoutBtn" class="btn btn-sm btn-outline-light d-none" onclick="logout()" data-i18n="nav.logout">Cerrar sesión</button>
             </div>
         </div>
     </nav>
@@ -120,9 +120,11 @@
 
     document.addEventListener('DOMContentLoaded', function () {
         applyTranslations(currentLang);
-        // fill navbar username
+        // fill navbar username + show/hide logout
         const tok = localStorage.getItem('token');
+        const logoutBtn = document.getElementById('logoutBtn');
         if (tok) {
+            if (logoutBtn) logoutBtn.classList.remove('d-none');
             try {
                 const payload = JSON.parse(atob(tok.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
                 if (payload.sub) {
@@ -134,6 +136,8 @@
                     }
                 }
             } catch (e) { console.error('token parse error', e); }
+        } else {
+            if (logoutBtn) logoutBtn.classList.add('d-none');
         }
     });
 
